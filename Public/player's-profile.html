@@ -1,0 +1,255 @@
+<html>
+
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+ 
+ <script>
+    //-------------------profile pic-------------------//
+    function showPrev(fileRef, prevRef) {
+      const [file] = fileRef.files
+      if (file) {
+        prevRef.src = URL.createObjectURL(file)
+      }
+    }
+//--------------------aadhaar card------------------//
+  </script>
+  
+
+
+
+
+
+  <script>
+    $(document).ready(function () {
+      $("#get-data").click(function () {
+
+        let obj = {
+          type: "get",
+          url: "/Get-Data",
+          data: {
+            emailid: $("#emailid").val()
+
+          }
+        }
+
+
+        $.ajax(obj).then(
+          function (responseJsonAry) {
+ alert(  JSON.stringify(responseJsonAry) )
+
+        
+    let name = responseJsonAry[0].name;
+    let dob = responseJsonAry[0].dob;
+    let gender = responseJsonAry[0].gender;
+    let contactP = responseJsonAry[0].contactP;
+    let address=responseJsonAry[0].address;
+    let sport = responseJsonAry[0].sport;
+    let otherinfo =responseJsonAry[0].otherinfo;
+   
+
+            $("#name").val(name);
+            $("#dob").val(dob);
+            $("#gender").val(gender);
+            $("#contactP").val(contactP);
+            $("#address").val(address);
+            $("#sport").val(sport);
+            $("#otherinfo").val(otherinfo);
+
+
+            let picurl = responseJsonAry[0].profilePicurl;
+    let apicurl = responseJsonAry[0].acardpic;  
+    
+            $("#prev").prop("src", picurl);
+            $("#hdn").val(picurl);
+
+            $("#prev1").prop("src", apicurl);
+            $("#hdn1").val(apicurl);
+
+          }).fail(function (err) { alert(err.message) })
+      })
+    })
+  </script>
+
+
+
+
+</head>
+
+<body>
+
+
+  <div class="container"
+    style="width: 80%;margin-top: 60px; border: 2px solid;box-shadow: 5px 5px 15px rgba(0,0,0,0.3); border-radius: 20px; margin-bottom: 60px; ">
+
+
+    <div>
+      <p style="margin-top: 20px; ; ">
+        <center style="font-size: 30px"> Player's Profile Form</center>
+      </p>
+    </div>
+
+
+    <form class="row g-6" action="/Upload-Data" method="POST" enctype="multipart/form-data"
+      style="padding-left: 20px; padding-right: 20px;">
+      <input type="hidden" id="hdn" name="hdn">
+      <input type="hidden" id="hdn1" name="hdn1">
+
+
+      <div class="col-md-6">
+        <label for="inputEmail4" class="form-label"><b>Emailid</b></label>
+        <input type="email" class="form-control" id="emailid" name="emailid" required>
+      </div>
+
+
+
+      <div class="col-md-2">
+        <br>
+        <button type="button" class="btn btn-dark" id="get-data">Get Data</button>
+      </div>
+
+<div class="row">
+      <div class="col-6" style="padding: 10px;">
+        <label class="form-label"><b>Upload Front of Aadhaar Card</b></label>
+        <input type="file" name="acardpicurl" id="acardpicurl" onchange="showPrev(acardpicurl,prev1)">
+        <img src="pics/sports-tools.jpg" width="100px" height="100px" id="prev1" alt="">
+      </div>
+
+
+
+      <div class="col-6" style="padding: 10px;">
+        <label class="form-label"><b>Profile Pic  </b></label><br>
+        <input type="file" name="profilePicurl" id="profilePicurl" onchange="showPrev(profilePicurl,prev)">
+        <img src="pics/sports-tools.jpg" width="100px" height="100px" id="prev" alt="">
+      </div>
+</div>
+
+      <div class="col-md-6" style="padding: 10px;">
+        <label class="form-label"><b>Name</b></label>
+        <input type="text" class="form-control" id="name" name="name" disabled>
+      </div>
+
+
+
+      <div class="col-6" style="padding: 10px;">
+        <label class="form-label"><b>DOB</b></label>
+        <input type="date" class="form-control" id="dob" name="dob" disabled>
+      </div>
+
+
+
+      <div class="col-6" style="padding: 10px;">
+        <label for="inputAddress2" class="form-label"><b>Gender </b></label>
+        <input type="text" class="form-control" id="gender" name="gender" disabled>
+      </div>
+
+
+
+
+      <div class="col-md-6" style="padding: 10px;">
+        <label class="form-label"><b>Contact Number</b></label>
+        <input type="text" class="form-control" id="contactP" name="contactP">
+      </div>
+
+
+
+      <div class="col-12" style="padding: 10px;">
+        <label class="form-label"><b>Address</b></label>
+        <input type="text" class="form-control" id="address" name="address">
+      </div>
+
+
+
+      <div class="col-md-5" style="padding: 10px;">
+        <label class="form-label"><b>Interested Sports</b></label>
+        <select name="sport" id="sport" style="width: 50%;">
+                    <option>Choose....</option>
+                    <option>Cricket</option>
+                    <option>Hockey</option>
+                    <option>Football</option>
+                    <option>Wrestling</option>
+                    <option>Badminton</option>
+                    <option>Kabaddi</option>
+                    <option>Athletics</option>
+                    <option>Table Tennis</option>
+                    <option>Chess</option>
+                    <option>Volleyball</option>
+                    <option>Basketball</option>
+                    <option>Boxing</option>
+                    <option>Tennis</option>
+                    <option>Shooting</option>
+                    <option>Archery</option>
+                    <option>Swimming</option>
+                    <option>Weightlifting</option>
+                    <option>Gymnastics</option>
+                    <option>Cycling</option>
+                    <option>Golf</option>
+                    <option>Squash</option>
+                    <option>Carrom</option>
+                    <option>Kho-Kho</option>
+                    <option>Judo</option>
+                    <option>Fencing</option>
+                    <option>Skating</option>
+                    <option>Taekwondo</option>
+                    <option>Handball</option>
+                    <option>Baseball</option>
+                    <option>Rugby</option>
+                    <option>Snooker</option>
+                    <option>Horse Riding</option>
+                    <option>Ice Hockey</option>
+                    <option>Pole Vault</option>
+                    <option>High Jump</option>
+                    <option>Long Jump</option>
+                    <option>Triple Jump</option>
+                    <option>Marathon</option>
+                    <option>Relay Race</option>
+                    <option>Para Athletics</option>
+                    <option>Rowing</option>
+                    <option>Sailing</option>
+                    <option>Diving</option>
+                    <option>Motor Racing</option>
+                    <option>Surfing</option>
+                    <option>Kickboxing</option>
+                    <option>Karate</option>
+                    <option>Billiards</option>
+                    <option>Bodybuilding</option>
+
+                </select>
+      </div>
+
+<div class="col-md-8"></div>
+
+
+
+      <div class="col-12" style="padding: 10px;">
+        <label class="form-label"><b>Other Information</b></label>
+        <br>
+        <textarea rows="3" cols="100%" name="otherinfo" id="otherinfo"></textarea>
+      </div>
+
+
+
+
+      <div class="col-6">
+        <center> <button type="submit" class="btn btn-dark">Upload Data</button></center>
+      </div>
+
+
+
+      <div class="col-6">
+        <center> <button type="submit" class="btn btn-dark" formaction="/ModifyProfile">Modify</button></center>
+      </div>
+
+
+
+    </form>
+  </div>
+
+</body>
+
+</html>

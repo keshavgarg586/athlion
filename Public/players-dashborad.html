@@ -1,0 +1,181 @@
+<html>
+
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+  <script>
+    var mymodule = angular.module("kuchModule", []);
+
+    mymodule.controller("kuchController", function ($scope, $http) {
+      $scope.Email = "";
+      $scope.oldPwd = "";
+      $scope.newPwd = "";
+      $scope.doUpdate = function () {
+        alert();
+        if (!$scope.Email || !$scope.oldPwd || !$scope.newPwd) {
+          alert("Please fill all fields.");
+          return;
+        }
+        
+        var url = "/Update-Password?kuchEmail=" + $scope.Email + "&kucholdPwd=" + $scope.oldPwd + "&kuchnewPwd=" + $scope.newPwd;
+
+
+        $http.get(url).then(allGoodFx, someBadFx);
+        function allGoodFx(response) {
+          //resp in JSON array
+          alert(response.data);
+
+        }
+
+        function someBadFx(response) {
+          alert(response.data);
+        }
+      };
+    });
+
+  </script>
+
+  <script>
+    function showUser() {
+      let activeUser = localStorage.getItem("activeUser");
+      document.getElementById("welcome").innerHTML = activeUser;
+    }
+    function doLogout() {
+      //alert()
+      localStorage.removeItem("activeUser");
+      location.href = "index.html";
+    }
+  </script>
+</head>
+
+<body ng-app="kuchModule" ng-controller="kuchController">
+  <center>
+    <div>
+      <p style="font-size: 30px;padding-top: 50px;">Welcome to Player's Dashboard</p>
+    </div>
+
+    <div class="row g-8">
+
+
+
+      <div class="col-md-3 " style="margin-top: 20px;">
+        <div class="card"
+          style="box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 20px; width: 300px; height: 300px;">
+          <img
+            src="pics/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-illustration-vector 2.jpg"
+            class="card-img-top" style="border-top-left-radius: 20px; border-top-right-radius: 20px; overflow: hidden;"
+            alt="...">
+          <div class="card-body">
+            <p style="font-size: 20px;"><b>My Profile</b></p>
+            <a href="player's-profile.html" button type="button" class="btn btn-dark">View Profile</button></a>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="col-md-3 " style="margin-top: 20px;">
+        <div class="card"
+          style="box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 20px; width: 300px; height: 300px;">
+          <img src="pics/dramatic-soccer-stadium.webp" class="card-img-top"
+            style="border-top-left-radius: 20px; border-top-right-radius:  20px; overflow: hidden; " alt="...">
+          <div class="card-body">
+            <p style="font-size: 20px;"><b>Tournaments</b></p>
+            <a href="tournaments-list.html"><button type="button" class="btn btn-dark">Explore Tournaments</button></a>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-3 " style="margin-top: 20px;">
+        <div class="card"
+          style="box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 20px; width: 300px; height: 300px;">
+          <img src="pics/Settings.webp" class="card-img-top"
+            style="border-top-left-radius: 20px; border-top-right-radius: 20px; overflow: hidden;" alt="...">
+          <div class="card-body">
+            <p style="font-size: 20px;"><b>Change Your Password</b></p>
+            <a><button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#login-modal"
+                style="margin-right: 15px;">Edit Settings</button></a>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div class="col-md-3 " style="margin-top: 20px; padding: auto;">
+        <div class="card"
+          style="box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 20px;  width: 300px; height: 300px">
+          <img src="pics/Logout.webp" class="card-img-top"
+            style="border-top-left-radius: 20px; border-top-right-radius: 20px; overflow: hidden;" alt="..." />
+          <div class="card-body">
+            <p style="font-size: 20px;"><b>Logout</b></p>
+            <a><button type="button" class="btn btn-dark" onclick="doLogout()" ;> Log out</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </center>
+
+
+  
+    <div class="modal" tabindex="-1" id="login-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" class="btn-dark">
+            <h5 class="modal-title" ;>Change Password</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+
+
+
+            <div class="form-floating mb-3">
+              <p style="text-align: left; font-size: 20px;"> Email ID </p>
+              <input type="text" id="txtEmail" ng-model="Email" name="txtEmail" autocomplete="off" value=""
+                style="height: 30px; width: 100%; font-size: 15px;box-shadow: 0 2px 2px rgba(0,0,0,0.2);">
+
+              <div id="errMsgE"></div>
+              <div id="emailHelp" class="form-text"></div>
+            </div>
+
+
+
+
+            <div class="form-floating mb-3">
+              <p style="text-align: left; font-size: 20px;">Old Password </p>
+              <input type="password" id="txtPwd" ng-model="oldPwd" name="txtPwd" autocomplete="off" value=""
+                style="height: 30px; width: 100%; font-size: 15px;box-shadow: 0 2px 2px rgba(0,0,0,0.2);">
+              <div class="form-text"></div>
+            </div>
+
+
+
+            <div class="form-floating mb-3">
+              <p style="text-align: left; font-size: 20px;">New Password </p>
+              <input type="password" id="txtnewPwd" ng-model="newPwd" name="txtnewPwd" autocomplete="off" value=""
+                style="height: 30px; width: 100%; font-size: 15px;box-shadow: 0 2px 2px rgba(0,0,0,0.2);">
+              <div class="form-text"></div>
+            </div>
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal" id="" value="Update-password"
+              ng-click="doUpdate();" style="width: 100%;">Update Password</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+</body>
+
+</html>

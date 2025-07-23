@@ -1,0 +1,112 @@
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <script>
+        var mymodule = angular.module("kuchModule", []);
+
+        mymodule.controller("kuchController", function ($scope, $http) {
+            $scope.jsonArray = [];
+            { $scope.doFetchAll = function (){
+                var url = "/organisers-list";
+
+
+                $http.get(url).then(allGoodFx, someBadFx);
+                function allGoodFx(response) {
+                    //resp in JSON array
+                    //alert(JSON.stringify(response.data));
+                    $scope.jsonArray = response.data;
+                }
+
+                function someBadFx(response) {
+                    alert(JSON.stringify(response.data));
+                }
+            }};
+
+        });
+    </script>
+</head>
+
+<body ng-app="kuchModule" ng-controller="kuchController" ng-init="doFetchAll();">
+
+    <center>
+        <div class="container>
+            <div class=" col-md-1 " style=" margin-top: 20px;"> </div>
+        <div class="col-md-10">
+            <div class="card" style="margin-top: 40px;box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 20px; ">
+                <div class="card-body">
+                    <div>
+                        <p style="font-size: 30px;padding-top: 20px;">All Registered Organisers</p>
+                    </div>
+                    <table class="table table-bordered" width="80%" border="">
+                        <tr class="table-dark">
+                            <th style="width: 100px;">
+                                <center> Sr.No</center>
+                            </th>
+                            <th style="width: 500px;">
+                                <center>Emailid</center>
+                            </th>
+                            <th style="width: 100px;">
+                                <center>Name of Organisation</center>
+                            </th>
+                            <th style="width: 100px;">
+                                <center>Registration Number</center>
+                            </th>
+                            <th style="width: 100px;">
+                                <center>Contact Number</center>
+                            </th>
+                             <th style="width: 100px;">
+                                <center>Sports</center>
+                            </th>
+                        </tr>
+                        <tr ng-repeat="obj in jsonArray">
+                            <td>
+                                <center>{{$index+1}}.</center>
+                            </td>
+                            <td>
+                                <center>{{obj.emailid}}</center>
+                            </td>
+                             <td>
+                                <center>{{obj.orgname}}</center>
+                            </td>
+                            <td>
+                                <center>{{obj.regnumber}}</center>
+                            </td>
+                            <td>
+                                <center>{{obj.contact}}</center>
+                            </td>
+                             <td>
+                                <center>{{obj.sports}}</center>
+                            </td>
+
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+
+
+
+        </div>
+
+
+    </center>
+
+
+</body>
+
+</html>

@@ -1,0 +1,218 @@
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <script>
+        var mymodule = angular.module("kuchModule", []);
+
+        mymodule.controller("kuchController", function ($scope, $http) {
+            $scope.jsonArray = [];
+            $scope.selCity;
+            $scope.selGame;
+            $scope.doFetchAll = function () {
+                //alert();
+                var url = "/fetch-all-tournaments?kuchCity=" + $scope.selCity + "&kuchGame=" + $scope.selGame;
+
+
+                $http.get(url).then(allGoodFx, someBadFx);
+                function allGoodFx(response) {
+                    //resp in JSON array
+                    //alert(JSON.stringify(response.data));
+                    $scope.jsonArray = response.data;
+                }
+
+                function someBadFx(response) {
+                    alert(JSON.stringify(response.data));
+                }
+            };
+            //---------------------------------------------------------------
+            $scope.cities = [{}];
+            $scope.doFetchAlCities = function () {
+                var url = "/do-fetch-all-cities";
+                //alert();
+                $http.get(url).then(allGoodFx, someBadFx);
+                function allGoodFx(response) {
+                    //resp in JSON array
+                    //alert(JSON.stringify(response.data));
+                    if (response.data.length === 0) {
+                        alert("No tournaments at this time.");
+                    } else {
+                        $scope.cities = response.data;
+                    }
+                }
+
+                function someBadFx(response) {
+                    alert(JSON.stringify(response.data));
+                }
+            };
+
+            //==================================================
+            $scope.oneRecord = {};
+            $scope.doShowDetails = function (index) {
+                // alert(JSON.stringify($scope.jsonArray[index]))
+                $scope.oneRecord = $scope.jsonArray[index];
+                //alert(JSON.stringify(response.oneRecord));
+            }
+        });
+    </script>
+</head>
+
+
+<body ng-app="kuchModule" ng-controller="kuchController" ng-init="doFetchAlCities();">
+
+    <center>
+        <div class="container>
+            <div class=" col-md-1 " style=" margin-top: 20px;"> </div>
+        <div class="col-md-10">
+            <div class="card" style="margin-top: 40px;box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 20px; ">
+                <div class="card-body">
+                    <div>
+                        <p style="font-size: 30px;padding-top: 20px;"><b> All Tournaments</b></p>
+                    </div>
+
+                    <select class="form-select form-select-lg mb-3" aria-label="Large select example"
+                        ng-model="selGame">
+                        <option value="none">Choose....</option>
+                        <option>Cricket</option>
+                        <option>Hockey</option>
+                        <option>Football</option>
+                        <option>Wrestling</option>
+                        <option>Badminton</option>
+                        <option>Kabaddi</option>
+                        <option>Athletics</option>
+                        <option>Table Tennis</option>
+                        <option>Chess</option>
+                        <option>Volleyball</option>
+                        <option>Basketball</option>
+                        <option>Boxing</option>
+                        <option>Tennis</option>
+                        <option>Shooting</option>
+                        <option>Archery</option>
+                        <option>Swimming</option>
+                        <option>Weightlifting</option>
+                        <option>Gymnastics</option>
+                        <option>Cycling</option>
+                        <option>Golf</option>
+                        <option>Squash</option>
+                        <option>Carrom</option>
+                        <option>Kho-Kho</option>
+                        <option>Judo</option>
+                        <option>Fencing</option>
+                        <option>Skating</option>
+                        <option>Taekwondo</option>
+                        <option>Handball</option>
+                        <option>Baseball</option>
+                        <option>Rugby</option>
+                        <option>Snooker</option>
+                        <option>Horse Riding</option>
+                        <option>Ice Hockey</option>
+                        <option>Pole Vault</option>
+                        <option>High Jump</option>
+                        <option>Long Jump</option>
+                        <option>Triple Jump</option>
+                        <option>Marathon</option>
+                        <option>Relay Race</option>
+                        <option>Para Athletics</option>
+                        <option>Rowing</option>
+                        <option>Sailing</option>
+                        <option>Diving</option>
+                        <option>Motor Racing</option>
+                        <option>Surfing</option>
+                        <option>Kickboxing</option>
+                        <option>Karate</option>
+                        <option>Billiards</option>
+                        <option>Bodybuilding</option>
+
+                    </select>
+
+
+                    <select class="form-select form-select-lg mb-3" aria-label="Large select example"
+                        ng-model="selCity">
+                        <option value="none">select</option>
+                        <option ng-repeat="obj in cities" value={{obj.city}}>{{obj.city}}</option>
+                    </select>
+
+                    <center><input type="button" class="btn btn-dark" value="Find Tournaments" ng-click="doFetchAll();"
+                            style="width: 200px;"></center>
+
+                    <div class="row">
+                        <div class="col-md-3  p-3 mb-2" ng-repeat="obj in jsonArray">
+                            <div class="card">
+
+
+
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        {{obj.city}}
+                                    </h5>
+                                    <h5>
+                                        {{obj.sport}}
+                                    </h5>
+                                    <a href="#" class="btn btn-dark" data-bs-toggle="modal"
+                                        data-bs-target="#detailsModal" ng-click="doShowDetails($index);">Contact
+                                        Organiser</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Details</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <p>
+                                        <b>Email ID of Organiser</b> : {{oneRecord.emailid}} <br>
+                                        <b> Event Name</b>:{{oneRecord.event}}<br>
+                                        <b> Date</b>:{{oneRecord.doe}}<br>
+                                        <b> Time</b>:{{oneRecord.toe}}<br>
+                                        <b> Venue Address</b>:{{oneRecord.address}}<br>
+                                        <b> City</b>:{{oneRecord.city}}<br>
+                                        <b> Sport</b>:{{oneRecord.sport}}<br>
+                                        <b> Minimum Age</b>:{{oneRecord.minage}}<br>
+                                        <b> Maximum Age</b>:{{oneRecord.maxage}}<br>
+                                        <b> Last Date to Register</b>:{{oneRecord.lastdate}}<br>
+                                        <b> Entry Fee</b>:{{oneRecord.fee}}<br>
+                                        <b> Winning Prize</b>:{{oneRecord.prize}}<br>
+                                        <b> Contact Number</b>:{{oneRecord.contact}}<br>
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+
+
+
+        </div>
+
+
+    </center>
+
+
+</body>
+
+</html>

@@ -1,0 +1,218 @@
+<html>
+
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script>
+    function showPrev(fileRef, prevRef) {
+      const [file] = fileRef.files
+      if (file) {
+        prevRef.src = URL.createObjectURL(file)
+      }
+    }
+
+  </script>
+
+
+
+
+
+  <script>
+    $(document).ready(function () {
+      $("#Search").click(function () {
+
+        let obj = {
+          type: "get",
+          url: "/Search",
+          data: {
+            emailid: $("#emailid").val()
+
+          }
+        }
+
+
+        $.ajax(obj).then(
+          function (responseJsonAry) {
+
+
+            let orgname = responseJsonAry[0].orgname;
+            let regnumber = responseJsonAry[0].regnumber;
+            let address = responseJsonAry[0].address;
+            let city = responseJsonAry[0].city;
+            let sports = responseJsonAry[0].sports;
+            let website = responseJsonAry[0].website;
+            let insta = responseJsonAry[0].insta;
+            let head = responseJsonAry[0].head;
+            let contact = responseJsonAry[0].contact;
+            let picurl = responseJsonAry[0].picurl;
+            let otherinfo = responseJsonAry[0].otherinfo;
+
+            $("#orgname").val(orgname);
+            $("#regnumber").val(regnumber);
+            $("#address").val(address);
+            $("#city").val(city);
+            $("#sports").val(sports);
+            $("#website").val(website);
+            $("#insta").val(insta);
+            $("#head").val(head);
+            $("#contact").val(contact);
+            $("#otherinfo").val(otherinfo);
+
+
+            $("#prev").prop("src", picurl);
+            $("#hdn").val(picurl);
+
+          }).fail(function (err) { alert(err.message) })
+      })
+    })
+  </script>
+
+
+<script>
+  function showUser() 
+  {
+    let activeUser = localStorage.getItem("activeUser");
+    document.getElementById("emailid").value = activeUser;
+  }
+</script>
+
+
+
+
+</head>
+
+<body onload="showUser();">
+
+
+  <div class="container"
+    style="width: 80%;margin-top: 60px; border: 2px solid;box-shadow: 5px 5px 15px rgba(0,0,0,0.3); border-radius: 20px; margin-bottom: 60px; ">
+
+
+    <div>
+      <p style="margin-top: 20px; ; ">
+        <center style="font-size: 30px"> Organiser Details</center>
+      </p>
+    </div>
+
+
+    <form class="row g-6" action="/Send-to-Server" method="POST" enctype="multipart/form-data"
+      style="padding-left: 20px; padding-right: 20px;">
+      <input type="hidden" id="hdn" name="hdn">
+
+
+      <div class="col-md-6">
+        <label for="inputEmail4" class="form-label"><b>Emailid</b></label>
+        <input type="email" class="form-control" id="emailid" name="emailid" readonly required>
+      </div>
+
+
+
+      <div class="col-md-1">
+        <br>
+        <button type="button" class="btn btn-dark" id="Search">Search</button>
+      </div>
+
+
+
+      <div class="col-md-6" style="padding: 10px;">
+        <label class="form-label"><b>Organisation Name</b></label>
+        <input type="text" class="form-control" id="orgname" name="orgname">
+      </div>
+
+
+
+      <div class="col-6" style="padding: 10px;">
+        <label class="form-label"><b>Registration Number</b></label>
+        <input type="text" class="form-control" id="regnumber" name="regnumber">
+      </div>
+
+
+
+      <div class="col-6" style="padding: 10px;">
+        <label for="inputAddress2" class="form-label"><b>Address </b></label>
+        <input type="text" class="form-control" id="address" name="address">
+      </div>
+
+
+
+
+      <div class="col-md-6" style="padding: 10px;">
+        <label for="inputCity" class="form-label"><b>City</b></label>
+        <input type="text" class="form-control" id="city" name="city">
+      </div>
+
+
+      <div class="col-md-12" style="padding: 10px;">
+        <label for="inputState" class="form-label"><b>Deals in Sports</b></label>
+        <input type="text" class="form-control" id="sports" name="sports">
+      </div>
+
+
+      <div class="col-md-6" style="padding: 10px;">
+        <label class="form-label"><b>Website link</b></label>
+        <input type="text" class="form-control" id="website" name="website">
+      </div>
+
+
+
+      <div class="col-6" style="padding: 10px;">
+        <label class="form-label"><b>Instagram Link</b></label>
+        <input type="text" class="form-control" id="insta" name="insta">
+      </div>
+
+
+
+      <div class="col-md-6" style="padding: 10px;">
+        <label class="form-label"><b>Organisation Head</b></label>
+        <input type="text" class="form-control" id="head" name="head">
+      </div>
+
+
+
+      <div class="col-6" style="padding: 10px;">
+        <label class="form-label"><b>Contact Number</b></label>
+        <input type="text" class="form-control" id="contact" name="contact">
+      </div>
+
+
+      <div class="col-9" style="padding: 10px;">
+        <label class="form-label"><b>Registration Certificate Picture</b></label>
+        <input type="file" name="profilePic" id="profilePic" onchange="showPrev(profilePic,prev)">
+        <img src="pics/sports-tools.jpg" width="200px" height="200px" id="prev" alt="">
+      </div>
+
+
+
+
+      <div class="col-12" style="padding: 10px;">
+        <label class="form-label"><b>Other Information</b></label>
+        <br>
+        <textarea rows="6" cols="100%" name="otherinfo" id="otherinfo"></textarea>
+      </div>
+
+
+
+
+      <div class="col-6">
+        <center> <button type="submit" class="btn btn-dark">Send to Server</button></center>
+      </div>
+
+
+
+      <div class="col-6">
+        <center> <button type="submit" class="btn btn-dark" formaction="/modify">Modify</button></center>
+      </div>
+
+
+
+    </form>
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,192 @@
+<html>
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<script>
+  function showUser() 
+  {
+    let activeUser = localStorage.getItem("activeUser");
+    document.getElementById("emailid").value = activeUser;
+  }
+</script>
+
+
+<body onload="showUser()">
+
+
+    <div class="container"
+        style="width: 80%;margin-top: 60px; border: 2px solid;box-shadow: 5px 5px 15px rgba(0,0,0,0.3); border-radius: 20px; margin-bottom: 60px; ">
+
+
+        <div>
+            <p style="margin-top: 20px; ; ">
+                <center style="font-size: 30px"> Fill Event Details</center>
+            </p>
+        </div>
+
+
+        <form class="row g-6" action="/List-Tournament" method="POST" enctype="multipart/form-data"
+            style="padding-left: 20px; padding-right: 20px;">
+
+
+
+            <div class="col-md-6">
+                <label for="inputEmail4" class="form-label"><b>Emailid</b></label>
+                <input type="email" class="form-control" id="emailid" name="emailid" readonly required>
+            </div>
+
+
+            <div class="col-md-6"></div>
+
+            <div class="col-md-4" style="padding: 10px;">
+                <label class="form-label"><b>Event Title</b></label>
+                <input type="text" class="form-control" id="event" name="event">
+            </div>
+
+
+
+            <div class="col-4" style="padding: 10px;">
+                <label class="form-label"><b>Date</b></label>
+                <input type="date" class="form-control" id="doe" name="doe">
+            </div>
+
+
+
+            <div class="col-4" style="padding: 10px;">
+                <label class="form-label"><b>Time </b></label>
+                <input type="time" class="form-control" id="toe" name="toe">
+            </div>
+
+
+
+
+            <div class="col-md-8" style="padding: 10px;">
+                <label class="form-label"><b>Address</b></label>
+                <input type="address" class="form-control" id="address" name="address">
+            </div>
+
+
+            <div class="col-md-4" style="padding: 10px;">
+                <label class="form-label"><b>City</b></label>
+                <input type="text" class="form-control" id="city" name="city">
+            </div>
+
+
+            <div class="col-md-6" style="padding: 10px;">
+                <b>Select Sports</b>
+                <select name="sport" id="sport" style="width: 50%;">
+                    <option>Choose....</option>
+                    <option>Cricket</option>
+                    <option>Hockey</option>
+                    <option>Football</option>
+                    <option>Wrestling</option>
+                    <option>Badminton</option>
+                    <option>Kabaddi</option>
+                    <option>Athletics</option>
+                    <option>Table Tennis</option>
+                    <option>Chess</option>
+                    <option>Volleyball</option>
+                    <option>Basketball</option>
+                    <option>Boxing</option>
+                    <option>Tennis</option>
+                    <option>Shooting</option>
+                    <option>Archery</option>
+                    <option>Swimming</option>
+                    <option>Weightlifting</option>
+                    <option>Gymnastics</option>
+                    <option>Cycling</option>
+                    <option>Golf</option>
+                    <option>Squash</option>
+                    <option>Carrom</option>
+                    <option>Kho-Kho</option>
+                    <option>Judo</option>
+                    <option>Fencing</option>
+                    <option>Skating</option>
+                    <option>Taekwondo</option>
+                    <option>Handball</option>
+                    <option>Baseball</option>
+                    <option>Rugby</option>
+                    <option>Snooker</option>
+                    <option>Horse Riding</option>
+                    <option>Ice Hockey</option>
+                    <option>Pole Vault</option>
+                    <option>High Jump</option>
+                    <option>Long Jump</option>
+                    <option>Triple Jump</option>
+                    <option>Marathon</option>
+                    <option>Relay Race</option>
+                    <option>Para Athletics</option>
+                    <option>Rowing</option>
+                    <option>Sailing</option>
+                    <option>Diving</option>
+                    <option>Motor Racing</option>
+                    <option>Surfing</option>
+                    <option>Kickboxing</option>
+                    <option>Karate</option>
+                    <option>Billiards</option>
+                    <option>Bodybuilding</option>
+
+                </select>
+
+            </div>
+
+
+
+            <div class="col-3" style="padding: 10px;">
+                <label class="form-label"><b>Min Age to Participate</b></label>
+                <input type="number" class="form-control" id="minage" name="minage">
+            </div>
+
+
+
+            <div class="col-md-3" style="padding: 10px;">
+                <label class="form-label"><b>Max Age to Participate</b></label>
+                <input type="number" class="form-control" id="maxage" name="maxage">
+            </div>
+
+
+
+            <div class="col-md-5" style="padding: 10px;">
+                <label class="form-label"><b>Last Date of Registration</b></label>
+                <input type="date" class="form-control" id="lastdate" name="lastdate">
+            </div>
+
+
+            <div class="col-md-3" style="padding: 10px;">
+                <label class="form-label"><b>Participation Fee(₹)</b></label>
+                <input type="number" class="form-control" name="fee" id="fee">
+            </div>
+
+
+            <div class="col-md-4" style="padding: 10px;">
+                <label class="form-label"><b>Prize Money(₹)</b></label><br>
+                <input type="number" class="form-control" name="prize" id="prize">
+            </div>
+
+
+            <div class="col-md-5" style="padding: 10px;">
+                <label class="form-label"><b>Contact Information</b></label>
+                <input type="text" class="form-control" id="contact" name="contact">
+            </div>
+
+
+
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-dark" style="width: 100%;">Publish Event</button>
+            </div>
+
+
+
+        </form>
+    </div>
+
+</body>
+
+</html>

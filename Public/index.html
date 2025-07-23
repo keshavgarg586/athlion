@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
+        </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            $("#indexEye").click(function () {
+                let txt = $("#txtPwd").prop("type");
+                if (txt == "password") {
+                    $("#txtPwd").prop("type", "text");
+                    $("#indexEye").removeClass("fa-eye").addClass("fa-eye-slash");
+                }
+                else {
+                    $("#txtPwd").prop("type", "password");
+                    $("#indexEye").removeClass("fa-eye-slash").addClass("fa-eye");
+                }
+
+            })
+            $("#ajax_signup").click(function () {
+
+                let obj = {
+                    type: "get",
+                    url: "/signup",
+                    data: {
+                        txtEmail: $("#txtEmail").val(),
+                        txtPwd: $("#txtPwd").val(),
+                        comboUser: $("#comboUser").val(),
+                    }
+                }
+
+
+                $.ajax(obj).then(
+                    function (response) {
+                        alert(response)
+                    }).fail(function (err) { alert(err.message) })
+            })
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#indexEyeLogin").click(function () {
+                let txt = $("#txtPwd").prop("type");
+                if (txt == "password") {
+                    $("#txtPwd").prop("type", "text");
+                    $("#indexEye").removeClass("fa-eye").addClass("fa-eye-slash");
+                }
+                else {
+                    $("#txtPwd").prop("type", "password");
+                    $("#indexEye").removeClass("fa-eye-slash").addClass("fa-eye");
+                }
+
+            })
+            $("#ajax_login").click(function () {
+
+                let obj = {
+                    type: "get",
+                    url: "/login",
+                    data: {
+                        txtEmailLogin: $("#txtEmailLogin").val(),
+                        txtPwdLogin: $("#txtPwdLogin").val(),
+                    }
+                }
+
+
+                $.ajax(obj).then(
+                    function (response) {
+                        // alert("*" + response + "*");
+                        if (response == "Blocked")
+                            alert("Sorry!! Ur Id is Blocked");
+                        else if (response == "Invalid")
+                            alert("Invalid emailid or Password");
+                        else
+                            if (response == "Player") {
+                                localStorage.setItem("activeUser", $("#txtEmailLogin").val());
+                                location.href = "players-dashborad.html";
+                            }
+
+                            else if (response == "Organizer") {
+                                localStorage.setItem("activeUser",$("#txtEmailLogin").val() );
+                                location.href = "organiser-dashborad.html";
+                            }
+
+                            else if (response == "Admin") {
+                                localStorage.setItem("activeUser", $("#txtEmailLogin").val());
+                                location.href = "admin-dashborad.html";
+                            }
+
+
+                    }).fail(function (err) { alert(err.message) })
+            })
+        })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#txtEmail").keyup(function () {
+                let email = $(this).val();//getter
+                //  let regex = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
+                let regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+                if (email == "") {
+                    $("#errMsgE").html("Empty");
+                    $(this).focus();
+                }
+                else if (regex.test(email) == false) {
+                    $("#errMsgE").html("Invalid Emailid");
+                    $(this).focus();
+                }
+                else {
+                    $("#errMsgE").html("Valid");
+
+                }
+
+            })
+        })
+
+        //------------------------------------
+        $(document).ready(function () {
+            $("#txtPwd").keyup(function () {
+                let regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+                let pwd = $(this).val();
+
+                if (pwd == "") {
+                    $("#errMsgp").html("Empty")
+                    $(this).focus();
+                }
+                else if (regex.test(pwd) == false) {
+                    $("#errMsgp").html("Invalid Password")
+                    $(this).focus();
+                }
+                else {
+                    $("#errMsgp").html("Valid Password")
+                }
+
+            })
+        })
+    </script>
+
+
+</head>
+
+<body>
+    <center>
+        <br><br>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#signup-modal"
+            style="margin-right: 15px;">
+            Sign Up
+
+        </button>
+
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#login-modal"
+            style="margin-right: 15px;">
+            Login
+        </button>
+        <a href="organiser-dashborad.html" target=""> <button type="button" class="btn btn-danger">Organiser
+                Dashboard</button></a>
+
+        <a href="players-dashborad.html" target=""> <button type="button" class="btn btn-danger"
+                style="margin-left: 15px;">Player's Dashboard</button></a>
+        <a href="admin-dashborad.html" target=""> <button type="button" class="btn btn-danger"
+                style="margin-left: 15px;">Admin Dashboard</button></a>
+
+    </center>
+
+
+    <form method="get">
+        <div class="modal" tabindex="-1" id="signup-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" ;>SignUp Modal</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="txtEmail" placeholder="name@example.com"
+                                name="txtEmail" autocomplete="off" value="">
+                            <label for="floatingInput">Email address</label>
+                            <div id="errMsgE"></div>
+                            <div id="emailHelp" class="form-text"></div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="txtPwd" placeholder="Password" name="txtPwd"
+                                autocomplete="off" value="">
+                            <label for="floatingPassword">Password</label>
+                            <i class="fa-solid fa-eye"
+                                style="transform: translate(420px,-40px); background-color: rgb(255, 255, 255);"
+                                id="indexEye"></i>
+                            <div id="errMsgp"></div>
+
+
+                        </div>
+                        <select class="form-select" aria-label="Default select example" id="comboUser" name="comboUser"
+                            style="font-weight: normal;color: rgb(0, 0, 0);">
+                            <option selected>User Type</option>
+                            <option value="Player">Player</option>
+                            <option value="Organizer">Organizer</option>
+                        </select>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="ajax_signup">Sign
+                            Up</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+    <form method="get">
+        <div class="modal" tabindex="-1" id="login-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Login Modal</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="txtEmailLogin" placeholder="name@example.com"
+                                name="txtEmail" autocomplete="off" value="">
+                            <label for="floatingInput">Email address</label>
+                            <div id="emailHelp" class="form-text"></div>
+                        </div>
+                        <div class="form-floating">
+                            <input type="password" class="form-control" id="txtPwdLogin" placeholder="Password"
+                                name="txtPwd" autocomplete="off" value="">
+                            <label for="floatingPassword">Password</label>
+                            <i class="fa-solid fa-eye"
+                                style="transform: translate(420px,-40px); background-color: rgb(255, 255, 255);"
+                                id="indexEyeLogin"></i>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                    id="ajax_login">Login</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </form>
+
+</body>
+
+</html>
