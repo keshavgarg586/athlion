@@ -3,12 +3,13 @@ var mysql2 = require("mysql2");
 var app = express();
 var fileuploader = require("express-fileupload");
 var cloudinary = require("cloudinary").v2;
+const path = require("path");
 
 var app = express();//app() returns an Object:app
 app.use(fileuploader());//for receiving files from client and save on server files
 
 
-app.use(express.static(join(__dirname, "Public")));
+app.use(express.static(path.join(__dirname, "Public")));
 app.use(express.json());
 //==========================Ai===============//
 const { GoogleGenerativeAI} = require("@google/generative-ai");
@@ -24,7 +25,7 @@ app.get("/", function (req, resp) {
     console.log(__dirname);
     console.log(__filename);
 
-    res.sendFile(join(__dirname, "Public", "index.html"));
+    res.sendFile(path.join(__dirname, "Public", "index.html"));
 })
 
 //-------------------Aiven-----------------//
