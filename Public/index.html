@@ -122,15 +122,15 @@
                 let regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
                 if (email == "") {
-                    $("#errMsgE").html("Empty");
+                    $("#errMsgE").html("Email can't be empty").css("color", "red");
                     $(this).focus();
                 }
                 else if (regex.test(email) == false) {
-                    $("#errMsgE").html("Invalid Emailid");
+                    $("#errMsgE").html("Invalid Email ID").css("color", "red");
                     $(this).focus();
                 }
                 else {
-                    $("#errMsgE").html("Valid");
+                    $("#errMsgE").html("");
 
                 }
 
@@ -144,15 +144,18 @@
                 let pwd = $(this).val();
 
                 if (pwd == "") {
-                    $("#errMsgp").html("Empty")
+                    $("#errMsgp").html("Password is empty").css("color", "red");
                     $(this).focus();
                 }
+                    else if (pwd.length < 8) {
+        $("#errMsgp").html("At least 8 characters").css("color", "red");
+    }
                 else if (regex.test(pwd) == false) {
-                    $("#errMsgp").html("Invalid Password")
+                    $("#errMsgp").html("Use A-Z, a-z, 0-9").css("color", "red");
                     $(this).focus();
                 }
                 else {
-                    $("#errMsgp").html("Valid Password")
+                    $("#errMsgp").html("")
                 }
 
             })
@@ -197,14 +200,16 @@
                     <div class="modal-body">
 
                         <div class="form-floating mb-3">
+                            <text>Email ID</text>
                             <input type="email" class="form-control" id="txtEmail" placeholder="name@example.com"
                                 name="txtEmail" autocomplete="off" value="">
-                            <text>Email ID</text>
+                            
                             <label for="floatingInput"></label>
                             <div id="errMsgE"></div>
                             <div id="emailHelp" class="form-text"></div>
                         </div>
                         <div class="form-floating mb-3">
+                            <text>Password</text>
                             <input type="password" class="form-control" id="txtPwd" placeholder="Password" name="txtPwd"
                                 autocomplete="off" value="">
                             <label for="floatingPassword">Password</label>
@@ -215,9 +220,10 @@
 
 
                         </div>
+                        <text>User Type</text>
                         <select class="form-select" aria-label="Default select example" id="comboUser" name="comboUser"
                             style="font-weight: normal;color: rgb(0, 0, 0);">
-                            <option selected>User Type</option>
+                            <option value="" selected disabled hidden>Choose</option>
                             <option value="Player">Player</option>
                             <option value="Organizer">Organizer</option>
                         </select>
