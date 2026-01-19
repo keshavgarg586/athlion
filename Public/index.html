@@ -188,56 +188,56 @@
 
     </center>
 
+<form method="get">
+    <div class="modal fade shadow" tabindex="-1" id="signup-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 10px;">
+                
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h4 class="modal-title fw-bold" id="exampleModalLabel">Signup</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
 
-    <form method="get">
-        <div class="modal" tabindex="-1" id="signup-modal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" ;>SignUp</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body px-4">
+                    <div class="mb-4">
+                        <label class="form-label fw-medium mb-2">Email ID</label>
+                        <input type="email" class="form-control py-2" id="txtEmail" 
+                               placeholder="Enter your email" name="txtEmail" autocomplete="off">
+                        <div id="errMsgE" class="mt-2" style="font-size: 0.9rem;"></div>
                     </div>
-                    <div class="modal-body">
 
-                        <div class="form-floating mb-3">
-                            <text>Email ID</text>
-                            <input type="email" class="form-control" id="txtEmail" placeholder="name@example.com"
-                                name="txtEmail" autocomplete="off" value="">
-                            
-                            <label for="floatingInput"></label>
-                            <div id="errMsgE"></div>
-                            <div id="emailHelp" class="form-text"></div>
+                    <div class="mb-4">
+                        <label class="form-label fw-medium mb-2">Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control py-2" id="txtPwd" 
+                                   placeholder="Enter password" name="txtPwd" autocomplete="off">
+                            <span class="input-group-text bg-white" id="indexEye" style="cursor: pointer;">
+                                <i class="fa-solid fa-eye"></i>
+                            </span>
                         </div>
-                        <div class="form-floating mb-3">
-                            <text>Password</text>
-                            <input type="password" class="form-control" id="txtPwd" placeholder="Password" name="txtPwd"
-                                autocomplete="off" value="">
-                            <label for="floatingPassword">Password</label>
-                            <i class="fa-solid fa-eye"
-                                style="transform: translate(420px,-40px); background-color: rgb(255, 255, 255);"
-                                id="indexEye"></i>
-                            <div id="errMsgp"></div>
+                        <div id="errMsgp" class="mt-2" style="font-size: 0.9rem;"></div>
+                    </div>
 
-
-                        </div>
-                        <text>User Type</text>
-                        <select class="form-select" aria-label="Default select example" id="comboUser" name="comboUser"
-                            style="font-weight: normal;color: rgb(0, 0, 0);">
+                    <div class="mb-3">
+                        <label class="form-label fw-medium mb-2">User Type</label>
+                        <select class="form-select py-2" id="comboUser" name="comboUser">
                             <option value="" selected disabled hidden>Choose</option>
                             <option value="Player">Player</option>
                             <option value="Organizer">Organizer</option>
                         </select>
-
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="ajax_signup">Sign
-                            Up</button>
+                </div>
 
-                    </div>
+                <div class="modal-footer border-top-0 pt-0 px-4 pb-4">
+                    <button type="button" class="btn w-100 py-2 fw-bold" 
+                            id="ajax_signup" style="background-color: #727272; color: white;">
+                        Signup
+                    </button>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+</form>
 
 
 
