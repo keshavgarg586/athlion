@@ -190,11 +190,10 @@
 
 <form method="get">
     <div class="modal fade shadow" tabindex="-1" id="signup-modal">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="border-radius: 10px;">
+        <div class="modal-dialog mt-5"> <div class="modal-content" style="border-radius: 10px;">
                 
                 <div class="modal-header border-bottom-0 pb-0">
-                    <h4 class="modal-title fw-bold" id="exampleModalLabel">Signup</h4>
+                    <h4 class="modal-title fw-bold">Signup</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
@@ -203,7 +202,7 @@
                         <label class="form-label fw-medium mb-2">Email ID</label>
                         <input type="email" class="form-control py-2" id="txtEmail" 
                                placeholder="Enter your email" name="txtEmail" autocomplete="off">
-                        <div id="errMsgE" class="mt-2" style="font-size: 0.9rem;"></div>
+                        <div id="errMsgE" class="mt-2" style="font-size: 0.9rem; color: #d9534f;"></div>
                     </div>
 
                     <div class="mb-4">
@@ -215,7 +214,7 @@
                                 <i class="fa-solid fa-eye"></i>
                             </span>
                         </div>
-                        <div id="errMsgp" class="mt-2" style="font-size: 0.9rem;"></div>
+                        <div id="errMsgp" class="mt-2" style="font-size: 0.9rem; color: #d9534f;"></div>
                     </div>
 
                     <div class="mb-3">
@@ -240,38 +239,47 @@
 </form>
 
 
-
     <form method="get">
-        <div class="modal" tabindex="-1" id="login-modal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Login Modal</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="txtEmailLogin" placeholder="name@example.com"
-                                name="txtEmail" autocomplete="off" value="">
-                            <label for="floatingInput">Email address</label>
-                            <div id="emailHelp" class="form-text"></div>
-                        </div>
-                        <div class="form-floating">
-                            <input type="password" class="form-control" id="txtPwdLogin" placeholder="Password"
-                                name="txtPwd" autocomplete="off" value="">
-                            <label for="floatingPassword">Password</label>
-                            <i class="fa-solid fa-eye"
-                                style="transform: translate(420px,-40px); background-color: rgb(255, 255, 255);"
-                                id="indexEyeLogin"></i>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                                    id="ajax_login">Login</button>
-                            </div>
-                        </div>
-                    </div>
+    <div class="modal fade shadow" tabindex="-1" id="signup-modal">
+        <div class="modal-dialog mt-5"> <div class="modal-content" style="border-radius: 10px;">
+                
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h4 class="modal-title fw-bold">Login</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-    </form>
+
+                <div class="modal-body px-4">
+                    <div class="mb-4">
+                        <label class="form-label fw-medium mb-2">Email ID</label>
+                        <input type="email" class="form-control py-2" id="txtEmail" 
+                               placeholder="Enter your email" name="txtEmail" autocomplete="off">
+                        <div id="errMsgE" class="mt-2" style="font-size: 0.9rem; color: #d9534f;"></div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-medium mb-2">Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control py-2" id="txtPwd" 
+                                   placeholder="Enter password" name="txtPwd" autocomplete="off">
+                            <span class="input-group-text bg-white" id="indexEye" style="cursor: pointer;">
+                                <i class="fa-solid fa-eye"></i>
+                            </span>
+                        </div>
+                        <div id="errMsgp" class="mt-2" style="font-size: 0.9rem; color: #d9534f;"></div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer border-top-0 pt-0 px-4 pb-4">
+                    <button type="button" class="btn w-100 py-2 fw-bold" 
+                            id="ajax_signup" style="background-color: #727272; color: white;">
+                        Signup
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 </body>
 
