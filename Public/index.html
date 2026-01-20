@@ -72,7 +72,7 @@
                 } else if (emailRegex.test(email) == false) {
                     $("#errMsgE").html("Invalid Email ID").css("color", "red");
                 } else {
-                    $("#errMsgE").html("Valid Format").css("color", "green");
+                    $("#errMsgE").html("");
                 }
             });
 
@@ -83,7 +83,7 @@
                 } else if (pwd.length < 8) {
                     $("#errMsgp").html("At least 8 characters").css("color", "red");
                 } else if (pwdRegex.test(pwd) == false) {
-                    $("#errMsgp").html("Need Uppercase & Number").css("color", "red");
+                    $("#errMsgp").html("Use A-Z, a-z, 0-9").css("color", "red");
                 } else {
                     $("#errMsgp").html("");
                 }
