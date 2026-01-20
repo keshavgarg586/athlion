@@ -51,10 +51,58 @@
                 }
 
 
-                $.ajax(obj).then(
-                    function (response) {
-                        alert(response)
-                    }).fail(function (err) { alert(err.message) })
+               $.ajax(obj)
+    .then(function (response) {
+        alert(response);
+        $("#ajax_signup").prop("disabled", false);
+    })
+    .fail(function (err) {
+        alert(err.message);
+        $("#ajax_signup").prop("disabled", false);
+    })
+        $(document).ready(function () {
+            $("#txtEmail").keyup(function () {
+                let email = $(this).val();//getter
+                //  let regex = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
+                let regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+                if (email == "") {
+                    $("#errMsgE").html("Email can't be empty").css("color", "red");
+                    $(this).focus();
+                }
+                else if (regex.test(email) == false) {
+                    $("#errMsgE").html("Invalid Email ID").css("color", "red");
+                    $(this).focus();
+                }
+                else {
+                    $("#errMsgE").html("");
+
+                }
+
+            })
+        })
+
+        //------------------------------------
+        $(document).ready(function () {
+            $("#txtPwd").keyup(function () {
+                let regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+                let pwd = $(this).val();
+
+                if (pwd == "") {
+                    $("#errMsgp").html("Password is empty").css("color", "red");
+                    $(this).focus();
+                }
+                    else if (pwd.length < 8) {
+        $("#errMsgp").html("At least 8 characters").css("color", "red");
+    }
+                else if (regex.test(pwd) == false) {
+                    $("#errMsgp").html("Use A-Z, a-z, 0-9").css("color", "red");
+                    $(this).focus();
+                }
+                else {
+                    $("#errMsgp").html("")
+                }
+
             })
         })
     </script>
@@ -160,53 +208,6 @@
         })
     </script>
 
-    <script>
-        $(document).ready(function () {
-            $("#txtEmail").keyup(function () {
-                let email = $(this).val();//getter
-                //  let regex = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
-                let regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-
-                if (email == "") {
-                    $("#errMsgE").html("Email can't be empty").css("color", "red");
-                    $(this).focus();
-                }
-                else if (regex.test(email) == false) {
-                    $("#errMsgE").html("Invalid Email ID").css("color", "red");
-                    $(this).focus();
-                }
-                else {
-                    $("#errMsgE").html("");
-
-                }
-
-            })
-        })
-
-        //------------------------------------
-        $(document).ready(function () {
-            $("#txtPwd").keyup(function () {
-                let regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-                let pwd = $(this).val();
-
-                if (pwd == "") {
-                    $("#errMsgp").html("Password is empty").css("color", "red");
-                    $(this).focus();
-                }
-                    else if (pwd.length < 8) {
-        $("#errMsgp").html("At least 8 characters").css("color", "red");
-    }
-                else if (regex.test(pwd) == false) {
-                    $("#errMsgp").html("Use A-Z, a-z, 0-9").css("color", "red");
-                    $(this).focus();
-                }
-                else {
-                    $("#errMsgp").html("")
-                }
-
-            })
-        })
-    </script>
 
 
 </head>
