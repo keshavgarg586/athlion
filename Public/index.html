@@ -16,22 +16,14 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
-
 
     <script>
-        
         $(document).ready(function () {
             // Regex patterns
             let emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
             let pwdRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
-            // --- Enable/Disable Signup Button ---
+            // --- Enable/Disable Signup Button Logic ---
             function validateSignupForm() {
                 let email = $("#txtEmail").val();
                 let pwd = $("#txtPwd").val();
@@ -44,7 +36,19 @@
                 }
             }
 
-            // --- Signup Scripts ---
+            // --- Enable/Disable Login Button Logic ---
+            function validateLoginForm() {
+                let email = $("#txtEmailLogin").val();
+                let pwd = $("#txtPwdLogin").val();
+
+                if (emailRegex.test(email) && pwd.length > 0) {
+                    $("#ajax_login").prop("disabled", false);
+                } else {
+                    $("#ajax_login").prop("disabled", true);
+                }
+            }
+
+            // --- Signup Eye Toggle ---
             $("#indexEye").click(function () {
                 let txt = $("#txtPwd").prop("type");
                 if (txt == "password") {
@@ -56,7 +60,8 @@
                 }
             });
 
-            $("#txtEmail, #txtPwd, #comboUser").on("input change", function () {
+            // Signup Validation on Keyup
+            $("#txtEmail, #txtPwd, #comboUser").on("input change keyup", function () {
                 validateSignupForm();
             });
 
@@ -67,7 +72,7 @@
                 } else if (emailRegex.test(email) == false) {
                     $("#errMsgE").html("Invalid Email ID").css("color", "red");
                 } else {
-                    $("#errMsgE").html("");
+                    $("#errMsgE").html("Valid Format").css("color", "green");
                 }
             });
 
@@ -78,7 +83,7 @@
                 } else if (pwd.length < 8) {
                     $("#errMsgp").html("At least 8 characters").css("color", "red");
                 } else if (pwdRegex.test(pwd) == false) {
-                    $("#errMsgp").html("Use A-Z, a-z, 0-9").css("color", "red");
+                    $("#errMsgp").html("Need Uppercase & Number").css("color", "red");
                 } else {
                     $("#errMsgp").html("");
                 }
@@ -96,28 +101,26 @@
                 }
                 $.ajax(obj).then(function (response) {
                     alert(response);
-                }).fail(function (err) { alert(err.message) });
+                }).fail(function (err) { alert("Server Error") });
             });
 
-            validateSignupForm();
-    </script>
-
-    <script>
-        $(document).ready(function () {
+            // --- Login Scripts ---
             $("#indexEyeLogin").click(function () {
-                let txt = $("#txtPwd").prop("type");
+                let txt = $("#txtPwdLogin").prop("type");
                 if (txt == "password") {
-                    $("#txtPwd").prop("type", "text");
-                    $("#indexEye").removeClass("fa-eye").addClass("fa-eye-slash");
+                    $("#txtPwdLogin").prop("type", "text");
+                    $(this).find("i").removeClass("fa-eye").addClass("fa-eye-slash");
+                } else {
+                    $("#txtPwdLogin").prop("type", "password");
+                    $(this).find("i").removeClass("fa-eye-slash").addClass("fa-eye");
                 }
-                else {
-                    $("#txtPwd").prop("type", "password");
-                    $("#indexEye").removeClass("fa-eye-slash").addClass("fa-eye");
-                }
+            });
 
-            })
+            $("#txtEmailLogin, #txtPwdLogin").on("input keyup", function () {
+                validateLoginForm();
+            });
+
             $("#ajax_login").click(function () {
-
                 let obj = {
                     type: "get",
                     url: "/login",
@@ -127,202 +130,106 @@
                     }
                 }
 
+                $.ajax(obj).then(function (response) {
+                    if (response == "Blocked") alert("Sorry!! Ur Id is Blocked");
+                    else if (response == "Invalid") alert("Invalid emailid or Password");
+                    else {
+                        localStorage.setItem("activeUser", $("#txtEmailLogin").val());
+                        if (response == "Player") location.href = "players-dashborad.html";
+                        else if (response == "Organizer") location.href = "organiser-dashborad.html";
+                        else if (response == "Admin") location.href = "admin-dashborad.html";
+                    }
+                }).fail(function (err) { alert("Error connecting to server") })
+            });
 
-                $.ajax(obj).then(
-                    function (response) {
-                        // alert("*" + response + "*");
-                        if (response == "Blocked")
-                            alert("Sorry!! Ur Id is Blocked");
-                        else if (response == "Invalid")
-                            alert("Invalid emailid or Password");
-                        else
-                            if (response == "Player") {
-                                localStorage.setItem("activeUser", $("#txtEmailLogin").val());
-                                location.href = "players-dashborad.html";
-                            }
-
-                            else if (response == "Organizer") {
-                                localStorage.setItem("activeUser",$("#txtEmailLogin").val() );
-                                location.href = "organiser-dashborad.html";
-                            }
-
-                            else if (response == "Admin") {
-                                localStorage.setItem("activeUser", $("#txtEmailLogin").val());
-                                location.href = "admin-dashborad.html";
-                            }
-
-
-                    }).fail(function (err) { alert(err.message) })
-            })
-        })
-
-        $(document).ready(function () {
-            $("#txtEmail").keyup(function () {
-                let email = $(this).val();//getter
-                //  let regex = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
-                let regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-
-                if (email == "") {
-                    $("#errMsgE").html("Email can't be empty").css("color", "red");
-                    $(this).focus();
-                }
-                else if (regex.test(email) == false) {
-                    $("#errMsgE").html("Invalid Email ID").css("color", "red");
-                    $(this).focus();
-                }
-                else {
-                    $("#errMsgE").html("");
-
-                }
-
-            })
-        })
-
-        //------------------------------------
-        $(document).ready(function () {
-            $("#txtPwd").keyup(function () {
-                let regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-                let pwd = $(this).val();
-
-                if (pwd == "") {
-                    $("#errMsgp").html("Password is empty").css("color", "red");
-                    $(this).focus();
-                }
-                    else if (pwd.length < 8) {
-        $("#errMsgp").html("At least 8 characters").css("color", "red");
-    }
-                else if (regex.test(pwd) == false) {
-                    $("#errMsgp").html("Use A-Z, a-z, 0-9").css("color", "red");
-                    $(this).focus();
-                }
-                else {
-                    $("#errMsgp").html("")
-                }
-
-            })
-        })
+            // Run initial check to ensure buttons are disabled on load
+            validateSignupForm();
+            validateLoginForm();
+        });
     </script>
-
-
-
 </head>
 
 <body>
     <center>
         <br><br>
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#signup-modal"
-            style="margin-right: 15px;">
-            Sign Up
-
-        </button>
-
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#login-modal"
-            style="margin-right: 15px;">
-            Login
-        </button>
-        <a href="organiser-dashborad.html" target=""> <button type="button" class="btn btn-danger">Organiser
-                Dashboard</button></a>
-
-        <a href="players-dashborad.html" target=""> <button type="button" class="btn btn-danger"
-                style="margin-left: 15px;">Player's Dashboard</button></a>
-        <a href="admin-dashborad.html" target=""> <button type="button" class="btn btn-danger"
-                style="margin-left: 15px;">Admin Dashboard</button></a>
-
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#signup-modal" style="margin-right: 15px;">Sign Up</button>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#login-modal" style="margin-right: 15px;">Login</button>
+        <a href="organiser-dashborad.html"> <button type="button" class="btn btn-danger">Organiser Dashboard</button></a>
+        <a href="players-dashborad.html"> <button type="button" class="btn btn-danger" style="margin-left: 15px;">Player's Dashboard</button></a>
+        <a href="admin-dashborad.html"> <button type="button" class="btn btn-danger" style="margin-left: 15px;">Admin Dashboard</button></a>
     </center>
 
-<form method="get">
-    <div class="modal fade shadow" tabindex="-1" id="signup-modal">
-        <div class="modal-dialog mt-5"> <div class="modal-content" style="border-radius: 10px;">
-                
-                <div class="modal-header border-bottom-0 pb-0">
-                    <h4 class="modal-title fw-bold">Signup</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body px-4">
-                    <div class="mb-4">
-                        <label class="form-label fw-medium mb-2">Email ID</label>
-                        <input type="email" class="form-control py-2" id="txtEmail" 
-                               placeholder="Enter your email" name="txtEmail" autocomplete="off">
-                        <div id="errMsgE" class="mt-2" style="font-size: 0.9rem; color: #d9534f;"></div>
+    <form method="get">
+        <div class="modal fade shadow" tabindex="-1" id="signup-modal">
+            <div class="modal-dialog mt-5">
+                <div class="modal-content" style="border-radius: 10px;">
+                    <div class="modal-header border-bottom-0 pb-0">
+                        <h4 class="modal-title fw-bold">Signup</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-
-                    <div class="mb-4">
-                        <label class="form-label fw-medium mb-2">Password</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control py-2" id="txtPwd" 
-                                   placeholder="Enter password" name="txtPwd" autocomplete="off">
-                            <span class="input-group-text bg-white" id="indexEye" style="cursor: pointer;">
-                                <i class="fa-solid fa-eye"></i>
-                            </span>
+                    <div class="modal-body px-4">
+                        <div class="mb-4">
+                            <label class="form-label fw-medium mb-2">Email ID</label>
+                            <input type="email" class="form-control py-2" id="txtEmail" placeholder="Enter your email" name="txtEmail" autocomplete="off">
+                            <div id="errMsgE" class="mt-2" style="font-size: 0.9rem;"></div>
                         </div>
-                        <div id="errMsgp" class="mt-2" style="font-size: 0.9rem; color: #d9534f;"></div>
+                        <div class="mb-4">
+                            <label class="form-label fw-medium mb-2">Password</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control py-2" id="txtPwd" placeholder="Enter password" name="txtPwd" autocomplete="off">
+                                <span class="input-group-text bg-white" id="indexEye" style="cursor: pointer;">
+                                    <i class="fa-solid fa-eye"></i>
+                                </span>
+                            </div>
+                            <div id="errMsgp" class="mt-2" style="font-size: 0.9rem;"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-medium mb-2">User Type</label>
+                            <select class="form-select py-2" id="comboUser" name="comboUser">
+                                <option value="" selected disabled hidden>Choose</option>
+                                <option value="Player">Player</option>
+                                <option value="Organizer">Organizer</option>
+                            </select>
+                        </div>
                     </div>
-
-                    <div class="mb-3">
-                        <label class="form-label fw-medium mb-2">User Type</label>
-                        <select class="form-select py-2" id="comboUser" name="comboUser">
-                            <option value="" selected disabled hidden>Choose</option>
-                            <option value="Player">Player</option>
-                            <option value="Organizer">Organizer</option>
-                        </select>
+                    <div class="modal-footer border-top-0 pt-0 px-4 pb-4">
+                        <button type="button" class="btn w-100 py-2 fw-bold" id="ajax_signup" style="background-color: #727272; color: white;">Signup</button>
                     </div>
-                </div>
-
-                <div class="modal-footer border-top-0 pt-0 px-4 pb-4">
-                    <button type="button" class="btn w-100 py-2 fw-bold" 
-                            id="ajax_signup" style="background-color: #727272; color: white;">
-                        Signup
-                    </button>
                 </div>
             </div>
         </div>
-    </div>
-</form>
-
+    </form>
 
     <form method="get">
-    <div class="modal fade shadow" tabindex="-1" id="login-modal">
-        <div class="modal-dialog mt-5"> <div class="modal-content" style="border-radius: 10px;">
-                
-                <div class="modal-header border-bottom-0 pb-0">
-                    <h4 class="modal-title fw-bold">Login</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body px-4">
-                    <div class="mb-4">
-                        <label class="form-label fw-medium mb-2">Email ID</label>
-                        <input type="email" class="form-control py-2" id="txtEmail" 
-                               placeholder="Enter your email" name="txtEmail" autocomplete="off">
-                        <div id="errMsgE" class="mt-2" style="font-size: 0.9rem; color: #d9534f;"></div>
+        <div class="modal fade shadow" tabindex="-1" id="login-modal">
+            <div class="modal-dialog mt-5">
+                <div class="modal-content" style="border-radius: 10px;">
+                    <div class="modal-header border-bottom-0 pb-0">
+                        <h4 class="modal-title fw-bold">Login</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-
-                    <div class="mb-4">
-                        <label class="form-label fw-medium mb-2">Password</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control py-2" id="txtPwd" 
-                                   placeholder="Enter password" name="txtPwd" autocomplete="off">
-                            <span class="input-group-text bg-white" id="indexEye" style="cursor: pointer;">
-                                <i class="fa-solid fa-eye"></i>
-                            </span>
+                    <div class="modal-body px-4">
+                        <div class="mb-4">
+                            <label class="form-label fw-medium mb-2">Email ID</label>
+                            <input type="email" class="form-control py-2" id="txtEmailLogin" placeholder="Enter your email" name="txtEmailLogin" autocomplete="off">
                         </div>
-                        <div id="errMsgp" class="mt-2" style="font-size: 0.9rem; color: #d9534f;"></div>
+                        <div class="mb-4">
+                            <label class="form-label fw-medium mb-2">Password</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control py-2" id="txtPwdLogin" placeholder="Enter password" name="txtPwdLogin" autocomplete="off">
+                                <span class="input-group-text bg-white" id="indexEyeLogin" style="cursor: pointer;">
+                                    <i class="fa-solid fa-eye"></i>
+                                </span>
+                            </div>
+                        </div>
                     </div>
-
-                </div>
-
-                <div class="modal-footer border-top-0 pt-0 px-4 pb-4">
-                    <button type="button" class="btn w-100 py-2 fw-bold" 
-                            id="ajax_login" style="background-color: #727272; color: white;">
-                        Login
-                    </button>
+                    <div class="modal-footer border-top-0 pt-0 px-4 pb-4">
+                        <button type="button" class="btn w-100 py-2 fw-bold" id="ajax_login" style="background-color: #727272; color: white;">Login</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
-
+    </form>
 </body>
 
 </html>
