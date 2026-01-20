@@ -25,21 +25,66 @@
 
 
     <script>
+        
         $(document).ready(function () {
+            // Regex patterns
+            let emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+            let pwdRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+
+            // --- Enable/Disable Signup Button ---
+            function validateSignupForm() {
+                let email = $("#txtEmail").val();
+                let pwd = $("#txtPwd").val();
+                let userType = $("#comboUser").val();
+
+                if (emailRegex.test(email) && pwdRegex.test(pwd) && userType != null) {
+                    $("#ajax_signup").prop("disabled", false);
+                } else {
+                    $("#ajax_signup").prop("disabled", true);
+                }
+            }
+
+            // --- Signup Scripts ---
             $("#indexEye").click(function () {
                 let txt = $("#txtPwd").prop("type");
                 if (txt == "password") {
                     $("#txtPwd").prop("type", "text");
-                    $("#indexEye").removeClass("fa-eye").addClass("fa-eye-slash");
-                }
-                else {
+                    $(this).find("i").removeClass("fa-eye").addClass("fa-eye-slash");
+                } else {
                     $("#txtPwd").prop("type", "password");
-                    $("#indexEye").removeClass("fa-eye-slash").addClass("fa-eye");
+                    $(this).find("i").removeClass("fa-eye-slash").addClass("fa-eye");
                 }
+            });
 
-            })
+            $("#txtEmail, #txtPwd, #comboUser").on("input change", function () {
+                validateSignupForm();
+            });
+
+            $("#txtEmail").keyup(function () {
+                let email = $(this).val();
+                if (email == "") {
+                    $("#errMsgE").html("Email can't be empty").css("color", "red");
+                } else if (emailRegex.test(email) == false) {
+                    $("#errMsgE").html("Invalid Email ID").css("color", "red");
+                } else {
+                    $("#errMsgE").html("");
+                }
+            });
+
+            $("#txtPwd").keyup(function () {
+                let pwd = $(this).val();
+                if (pwd == "") {
+                    $("#errMsgp").html("Password is empty").css("color", "red");
+                } else if (pwd.length < 8) {
+                    $("#errMsgp").html("At least 8 characters").css("color", "red");
+                } else if (pwdRegex.test(pwd) == false) {
+                    $("#errMsgp").html("Use A-Z, a-z, 0-9").css("color", "red");
+                } else {
+                    $("#errMsgp").html("");
+                }
+            });
+
             $("#ajax_signup").click(function () {
-
                 let obj = {
                     type: "get",
                     url: "/signup",
@@ -49,64 +94,12 @@
                         comboUser: $("#comboUser").val(),
                     }
                 }
+                $.ajax(obj).then(function (response) {
+                    alert(response);
+                }).fail(function (err) { alert(err.message) });
+            });
 
-
-               $.ajax(obj)
-    .then(function (response) {
-        $("#ajax_signup").prop("disabled", true);
-        alert(response);
-        
-    })
-    .fail(function (err) {
-        $("#ajax_signup").prop("disabled", false);
-        alert(err.message);
-        
-    })
-        $(document).ready(function () {
-            $("#txtEmail").keyup(function () {
-                let email = $(this).val();//getter
-                //  let regex = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
-                let regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-
-                if (email == "") {
-                    $("#errMsgE").html("Email can't be empty").css("color", "red");
-                    $(this).focus();
-                }
-                else if (regex.test(email) == false) {
-                    $("#errMsgE").html("Invalid Email ID").css("color", "red");
-                    $(this).focus();
-                }
-                else {
-                    $("#errMsgE").html("");
-
-                }
-
-            })
-        })
-
-        //------------------------------------
-        $(document).ready(function () {
-            $("#txtPwd").keyup(function () {
-                let regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-                let pwd = $(this).val();
-
-                if (pwd == "") {
-                    $("#errMsgp").html("Password is empty").css("color", "red");
-                    $(this).focus();
-                }
-                    else if (pwd.length < 8) {
-        $("#errMsgp").html("At least 8 characters").css("color", "red");
-    }
-                else if (regex.test(pwd) == false) {
-                    $("#errMsgp").html("Use A-Z, a-z, 0-9").css("color", "red");
-                    $(this).focus();
-                }
-                else {
-                    $("#errMsgp").html("")
-                }
-
-            })
-        })
+            validateSignupForm();
     </script>
 
     <script>
