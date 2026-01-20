@@ -53,12 +53,14 @@
 
                $.ajax(obj)
     .then(function (response) {
+        $("#ajax_signup").prop("disabled", true);
         alert(response);
-        $("#ajax_signup").prop("disabled", false);
+        
     })
     .fail(function (err) {
-        alert(err.message);
         $("#ajax_signup").prop("disabled", false);
+        alert(err.message);
+        
     })
         $(document).ready(function () {
             $("#txtEmail").keyup(function () {
