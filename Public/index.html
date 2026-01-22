@@ -114,7 +114,39 @@
                     $("#txtPwdLogin").prop("type", "password");
                     $(this).find("i").removeClass("fa-eye-slash").addClass("fa-eye");
                 }
+            });  
+
+
+
+            
+            $("#txtEmailLogin").keyup(function () {
+                let email = $(this).val();
+                if (email == "") {
+                    $("#errMsgELogin").html("Email can't be empty").css("color", "red");
+                } else if (emailRegex.test(email) == false) {
+                    $("#errMsgELogin").html("Invalid Email ID").css("color", "red");
+                } else {
+                    $("#errMsgELogin").html("");
+                }
             });
+
+            $("#txtPwdLogin").keyup(function () {
+                let pwd = $(this).val();
+                if (pwd == "") {
+                    $("#errMsgpLogin").html("Password is empty").css("color", "red");
+                } else if (pwd.length < 8) {
+                    $("#errMsgpLogin").html("At least 8 characters").css("color", "red");
+                } else if (pwdRegex.test(pwd) == false) {
+                    $("#errMsgpLogin").html("Use A-Z, a-z, 0-9").css("color", "red");
+                } else {
+                    $("#errMsgpLogin").html("");
+                }
+            });
+
+
+
+
+            
 
             $("#txtEmailLogin, #txtPwdLogin").on("input keyup", function () {
                 validateLoginForm();
@@ -212,6 +244,7 @@
                         <div class="mb-4">
                             <label class="form-label fw-medium mb-2">Email ID</label>
                             <input type="email" class="form-control py-2" id="txtEmailLogin" placeholder="Enter your email" name="txtEmailLogin" autocomplete="off">
+                            <div id="errMsgELogin" class="mt-2" style="font-size: 0.9rem;"></div>
                         </div>
                         <div class="mb-4">
                             <label class="form-label fw-medium mb-2">Password</label>
@@ -220,6 +253,7 @@
                                 <span class="input-group-text bg-white" id="indexEyeLogin" style="cursor: pointer;">
                                     <i class="fa-solid fa-eye"></i>
                                 </span>
+                                <div id="errMsgpLogin" class="mt-2" style="font-size: 0.9rem;"></div>
                             </div>
                         </div>
                     </div>
