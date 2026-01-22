@@ -30,7 +30,7 @@
                 let userType = $("#comboUser").val();
 
                 if (emailRegex.test(email) && pwdRegex.test(pwd) && userType != null) {
-                    $("#ajax_signup").prop("disabled", false);
+                    $("#ajax_signup").prop("disabled", false).css("background-color", "black");;
                 } else {
                     $("#ajax_signup").prop("disabled", true);
                 }
@@ -42,7 +42,7 @@
                 let pwd = $("#txtPwdLogin").val();
 
                 if (emailRegex.test(email) && pwd.length > 0) {
-                    $("#ajax_login").prop("disabled", false);
+                    $("#ajax_login").prop("disabled", false).css("background-color", "black");;
                 } else {
                     $("#ajax_login").prop("disabled", true);
                 }
@@ -253,8 +253,9 @@
                                 <span class="input-group-text bg-white" id="indexEyeLogin" style="cursor: pointer;">
                                     <i class="fa-solid fa-eye"></i>
                                 </span>
-                                <div id="errMsgpLogin" class="mt-2" style="font-size: 0.9rem;"></div>
+                                
                             </div>
+                            <div id="errMsgpLogin" class="mt-2" style="font-size: 0.9rem;"></div>
                         </div>
                     </div>
                     <div class="modal-footer border-top-0 pt-0 px-4 pb-4">
